@@ -1,6 +1,5 @@
 import random
 
-#anthropic apikey: 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
 
 
 letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
