@@ -198,7 +198,9 @@ def bot_print_board():
             print("-" * 21)
 
 
-
+def print_whole():
+    pla_print_board()
+    bot_print_board()
 
 
 
@@ -218,6 +220,10 @@ def main():
                 print('Hit!')
                 bot_board[x][y] = 'X'
                 while True:
+                    if pla_check():
+                        print('Player won!')
+                        print_whole()
+                        exit()
                     x, y = int(input('Enter your shot').split(','))
                     if bot_board[x][y] == 1:
                         print('Hit!')
@@ -259,6 +265,11 @@ def main():
                     axis('y')
                 else:
                     axis('y')
+            if bot_check():
+                print('Bot won!')
+                print_whole()
+                exit()
+                
         pla_print_board()
         bot_print_board()
 
