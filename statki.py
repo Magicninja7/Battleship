@@ -2,7 +2,6 @@ import random
 
 
 
-letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 pla_board = [[0 for _ in range(10)] for _ in range(10)]
 bot_board = [[0 for _ in range(10)] for _ in range(10)]
 
