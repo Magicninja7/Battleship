@@ -10,7 +10,17 @@ move = 'player'
 length = 5
 move = 'player'
 
-
+#sets who starts
+def whose_turn():
+    global move
+    whose = input('Whose turn? b/p (bot/player)')
+    while whose not in ['b', 'bot', 'p', 'player']:
+        whose = input('Invalid input. Whose turn? b/p (bot/player)')
+    if whose in ['b', 'bot']:
+        move = 'bot'
+    else:
+        move = 'player'
+    return
 
 #bot chooses where to shoot, based on where a close X is
 def axis(xory):
@@ -215,6 +225,7 @@ def main():
     bot_create_board()
     global move
     move = 'player'
+    whose_turn()
     
 
     while True:
@@ -244,11 +255,7 @@ def main():
                 bot_board[x][y] = 'O'
                 print('Miss!')
                 move = 'bot'
-            for _ in range(4):
-                print()
-            print('pla move')
-            print('PLA BOARD:')
-            pla_print_board()
+                
 
         
         while move == 'bot':
@@ -284,12 +291,9 @@ def main():
                     axis('y')
             if bot_check():
                 print('Bot won!')
+                print_whole()
                 exit()
-            for _ in range(4):
-                print()
-            print('bot move')
-            print('BOT BOARD:')
-            bot_print_board()
+
             
                 
 
