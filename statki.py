@@ -7,6 +7,9 @@ bot_board = [[0 for _ in range(10)] for _ in range(10)]
 
 pla_possible_ships = []
 move = 'player'
+length = 5
+move = 'player'
+
 
 
 #bot chooses where to shoot, based on where a close X is
@@ -27,13 +30,13 @@ def axis(xory):
             
 #check if a shot is a hit or a miss
 def check_result(x, y):
+    global move
     if pla_board[x][y] == 1:
         pla_board[x][y] = 'X'  
         return True  
     else:
         pla_board[x][y] = 'O'
         move = 'player'
-
         return False
     
     
@@ -42,7 +45,7 @@ def check_result(x, y):
 def pla_check():
     for i in range(10):
         for j in range(10):
-            if pla_board[i][j] == 1:
+            if bot_board[i][j] == 1:
                 return False
     return True
 
@@ -50,7 +53,7 @@ def pla_check():
 def bot_check():
     for i in range(10):
         for j in range(10):
-            if bot_board[i][j] == 1:
+            if pla_board[i][j] == 1:
                 return False
     return True
 
@@ -81,6 +84,7 @@ def pla_create_board():
 #bot creates board
 def bot_create_board():
     used_cords = []
+    global length
     length = 5
     def check_board():
         global length
@@ -209,13 +213,16 @@ def print_whole():
 def main():
     pla_create_board()
     bot_create_board()
+    global move
+    move = 'player'
     
 
     while True:
-
+        pla_print_board()
         while move == 'player':
             #player move
-            x, y = int(input('Enter your shot').split(','))
+            x, y = input('Enter your shot').split(',')
+            x, y = int(x), int(y)
             if bot_board[x][y] == 1:
                 print('Hit!')
                 bot_board[x][y] = 'X'
@@ -224,7 +231,8 @@ def main():
                         print('Player won!')
                         print_whole()
                         exit()
-                    x, y = int(input('Enter your shot').split(','))
+                    x, y = input('Enter your shot').split(',')
+                    x, y = int(x), int(y)
                     if bot_board[x][y] == 1:
                         print('Hit!')
                         bot_board[x][y] = 'X'
@@ -233,17 +241,26 @@ def main():
                         bot_board[x][y] = 'O'
                         move = 'bot'
             else:
+                bot_board[x][y] = 'O'
                 print('Miss!')
+                move = 'bot'
+            for _ in range(4):
+                print()
+            print('pla move')
+            print('PLA BOARD:')
+            pla_print_board()
 
+        
         while move == 'bot':
             #bot move
             if pla_possible_ships == []:
-                x = random.randint(0, 10)
-                y = random.randint(0, 10)
+                x = random.randint(0, 9)
+                y = random.randint(0, 9)
                 if pla_board[x][y] == 1:
                     pla_board[x][y] = 'X'
                 else:
                     pla_board[x][y] = 'O'
+                    move = 'player'
                     
             elif len(pla_possible_ships) == 1:
                 x, y = pla_possible_ships[0]
@@ -267,29 +284,15 @@ def main():
                     axis('y')
             if bot_check():
                 print('Bot won!')
-                print_whole()
                 exit()
+            for _ in range(4):
+                print()
+            print('bot move')
+            print('BOT BOARD:')
+            bot_print_board()
+            
                 
-        pla_print_board()
-        bot_print_board()
+
 
             
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
+main()
